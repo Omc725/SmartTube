@@ -121,6 +121,7 @@
         <item name="cardProgressStyle">@style/ProgressBarHorizontal.Dark</item>
         <item name="shelfBackground">@color/scheme_grey_shelf_background_dark</item>
         <item name="cardDefaultBackground">@color/scheme_grey_card_background_dark</item>
+        <item name="cardSelectedBackground">@color/card_selected_background_white</item>
         <item name="appLogo">@mipmap/app_logo_semi_red</item>
     </style>
     <style name="ProgressBarHorizontal.Dark" parent="@android:style/Widget.ProgressBar.Horizontal">

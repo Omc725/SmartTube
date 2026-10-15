@@ -15,6 +15,7 @@ import com.liskovsoft.smartyoutubetv2.common.app.models.playback.ui.UiOptionItem
 import com.liskovsoft.smartyoutubetv2.common.app.presenters.AppDialogPresenter;
 import com.liskovsoft.smartyoutubetv2.common.app.presenters.base.BasePresenter;
 import com.liskovsoft.smartyoutubetv2.common.app.presenters.settings.AccountSettingsPresenter;
+import com.liskovsoft.smartyoutubetv2.common.app.presenters.YTSignInPresenter;
 import com.liskovsoft.smartyoutubetv2.common.misc.MediaServiceManager;
 import com.liskovsoft.smartyoutubetv2.common.prefs.AccountsData;
 import com.liskovsoft.smartyoutubetv2.common.prefs.GeneralData;
@@ -71,7 +72,7 @@ public class AccountSelectionPresenter extends BasePresenter<Void> {
     }
 
     private void createAndShowDialog(List<Account> accounts, List<Drawable> icons, boolean force) {
-        if (accounts.size() <= 1 && !force) {
+        if ((accounts == null || accounts.isEmpty()) && !force) {
             return;
         }
 
@@ -85,25 +86,35 @@ public class AccountSelectionPresenter extends BasePresenter<Void> {
     private void appendAccountSelection(List<Account> accounts, List<Drawable> icons, AppDialogPresenter settingsPresenter) {
         List<OptionItem> optionItems = new ArrayList<>();
 
+        if (accounts != null) {
+            int index = -1;
+            for (Account account : accounts) {
+                index++;
+                CharSequence icon = Utils.icon(icons != null && accounts.size() == icons.size() ? icons.get(index) : null);
+                optionItems.add(UiOptionItem.from(
+                        TextUtils.concat(icon, " ", formatAccount(account)), option -> {
+                            selectAccount(account);
+                            settingsPresenter.closeDialog();
+                        }, account.isSelected()
+                ));
+            }
+        }
+
+        Account currentAccount = mSignInService != null ? mSignInService.getSelectedAccount() : null;
+
         optionItems.add(UiOptionItem.from(
                 getContext().getString(R.string.dialog_account_none), optionItem -> {
                     selectAccount(null);
                     settingsPresenter.closeDialog();
-                }, true
+                }, currentAccount == null
         ));
 
-        int index = -1;
-
-        for (Account account : accounts) {
-            index++;
-            CharSequence icon = Utils.icon(accounts.size() == icons.size() ? icons.get(index) : null);
-            optionItems.add(UiOptionItem.from(
-                    TextUtils.concat(icon, " ", formatAccount(account)), option -> {
-                        selectAccount(account);
-                        settingsPresenter.closeDialog();
-                    }, account.isSelected()
-            ));
-        }
+        optionItems.add(UiOptionItem.from(
+                "+ " + getContext().getString(R.string.dialog_add_account), optionItem -> {
+                    settingsPresenter.closeDialog();
+                    YTSignInPresenter.instance(getContext()).start();
+                }, false
+        ));
 
         settingsPresenter.appendRadioCategory(getContext().getString(R.string.dialog_account_list), optionItems);
     }

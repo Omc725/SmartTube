@@ -1,0 +1,176 @@
+name: Upstream Sync & Modern Mod Release
+
+on:
+  schedule:
+    # Runs every 6 hours
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      force_build:
+        description: 'Force rebuild even if no upstream changes'
+        required: false
+        default: true
+        type: boolean
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - 'README.md'
+      - '.last_upstream_commit'
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  check-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check Upstream Changes
+        id: check_upstream
+        run: |
+          UPSTREAM_HEAD=$(git ls-remote https://github.com/yuliskov/SmartTube.git HEAD | awk '{print $1}')
+          echo "UPSTREAM_HEAD=$UPSTREAM_HEAD" >> $GITHUB_ENV
+
+          LAST_SYNCED=""
+          if [ -f .last_upstream_commit ]; then
+            LAST_SYNCED=$(cat .last_upstream_commit)
+          fi
+          echo "LAST_SYNCED=$LAST_SYNCED" >> $GITHUB_ENV
+
+          if [ "$UPSTREAM_HEAD" = "$LAST_SYNCED" ] && [ "${{ github.event.inputs.force_build }}" != "true" ] && [ "${{ github.event_name }}" = "schedule" ]; then
+            echo "SHOULD_BUILD=false" >> $GITHUB_ENV
+            echo "No new upstream commits. Skipping build."
+          else
+            echo "SHOULD_BUILD=true" >> $GITHUB_ENV
+            echo "New commits detected or manual build requested. Proceeding..."
+          fi
+
+      - name: Sync with Upstream & Apply Mod
+        if: env.SHOULD_BUILD == 'true'
+        run: |
+          git remote add upstream https://github.com/yuliskov/SmartTube.git || true
+          git fetch upstream master
+          
+          # Try merging upstream master
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git merge -X theirs upstream/master -m "chore(sync): merge upstream/master into mod" || {
+            echo "Merge encountered conflict, resetting to upstream/master"
+            git checkout upstream/master
+          }
+
+          git submodule update --init --recursive
+
+          # Apply modern mod enhancements
+          chmod +x scripts/apply_mod.sh
+          ./scripts/apply_mod.sh
+
+      - name: Set up JDK 17
+        if: env.SHOULD_BUILD == 'true'
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Configure Keystore Signing
+        if: env.SHOULD_BUILD == 'true'
+        run: |
+          if [ -n "${{ secrets.SIGNING_KEY }}" ]; then
+            echo "${{ secrets.SIGNING_KEY }}" | base64 --decode > ${{ github.workspace }}/release.jks
+            echo "storePassword=${{ secrets.KEY_STORE_PASSWORD }}" > keystore.properties
+            echo "keyAlias=${{ secrets.ALIAS }}" >> keystore.properties
+            echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> keystore.properties
+            echo "storeFile=${{ github.workspace }}/release.jks" >> keystore.properties
+          else
+            echo "Generating self-signed release keystore for Android TV installation..."
+            keytool -genkey -v -keystore ${{ github.workspace }}/release.jks -keyalg RSA -keysize 2048 -validity 10000 \
+              -alias smarttube -dname "CN=SmartTubeMod, OU=Mod, O=SmartTube, L=Unknown, S=Unknown, C=US" \
+              -storepass smarttubepass -keypass smarttubepass
+            echo "storePassword=smarttubepass" > keystore.properties
+            echo "keyAlias=smarttube" >> keystore.properties
+            echo "keyPassword=smarttubepass" >> keystore.properties
+            echo "storeFile=${{ github.workspace }}/release.jks" >> keystore.properties
+          fi
+
+      - name: Grant Gradle Permissions
+        if: env.SHOULD_BUILD == 'true'
+        run: chmod +x gradlew
+
+      - name: Extract Version Info
+        if: env.SHOULD_BUILD == 'true'
+        id: version_info
+        run: |
+          VERSION_NAME=$(grep "versionName" smarttubetv/build.gradle | head -n 1 | awk -F'"' '{print $2}')
+          VERSION_CODE=$(grep "versionCode" smarttubetv/build.gradle | head -n 1 | awk '{print $2}')
+          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
+          echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
+          echo "Building SmartTube Beta version: $VERSION_NAME ($VERSION_CODE)"
+
+      - name: Build APKs with Gradle
+        if: env.SHOULD_BUILD == 'true'
+        run: ./gradlew clean assembleStbetaRelease
+
+      - name: Prepare Release Assets & Update Manifest
+        if: env.SHOULD_BUILD == 'true'
+        run: |
+          mkdir -p release_assets
+          
+          # Copy APKs
+          cp smarttubetv/build/outputs/apk/stbeta/release/*_arm64-v8a.apk release_assets/smarttube_beta_arm64-v8a.apk || true
+          cp smarttubetv/build/outputs/apk/stbeta/release/*_armeabi-v7a.apk release_assets/smarttube_beta_armeabi-v7a.apk || true
+          cp smarttubetv/build/outputs/apk/stbeta/release/*_universal.apk release_assets/smarttube_beta_universal.apk || true
+          cp smarttubetv/build/outputs/apk/stbeta/release/*_x86.apk release_assets/smarttube_beta_x86.apk || true
+          cp smarttubetv/build/outputs/apk/stbeta/release/*.apk release_assets/
+
+          # Generate smarttube_beta2.json update manifest
+          chmod +x scripts/generate_manifest.sh
+          ./scripts/generate_manifest.sh "$VERSION_NAME" "$VERSION_CODE" "$UPSTREAM_HEAD" release_assets/smarttube_beta2.json
+
+      - name: Publish GitHub Release
+        if: env.SHOULD_BUILD == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          RELEASE_TITLE="SmartTube Mod v${VERSION_NAME}"
+          RELEASE_NOTES="### SmartTube Modern Mod v${VERSION_NAME}
+          
+          ✨ **Öne Çıkan Özellikler / Features:**
+          - 🎨 **Modern Arayüz Makyajı**: Premium koyu OLED renk paleti, 12dp yuvarlatılmış kart köşeleri, kırmızı vurgular ve göz yormayan odaklama stili.
+          - 👤 **Açılışta Hesap Seçme Ekranı**: Uygulama açıldığında Netflix/YouTube TV tarzı profil/hesap seçimi, misafir modu ve hızlı hesap ekleme.
+          - 🔄 **Otomatik Güncelleme**: Uygulama içi güncellemeler doğrudan bu repodan \`smarttube_beta2.json\` kanalıyla alınır.
+          - ⚡ **Orijinal Performans**: Android Leanback GPU hızlandırması kullanılarak sıfır takılma ile çalışır.
+          
+          Upstream Commit: \`${UPSTREAM_HEAD:0:7}\`"
+
+          # Create or update 'latest' release tag
+          gh release delete latest --yes || true
+          git tag -d latest 2>/dev/null || true
+          git push origin :refs/tags/latest 2>/dev/null || true
+
+          gh release create latest release_assets/* \
+            --title "$RELEASE_TITLE" \
+            --notes "$RELEASE_NOTES"
+
+          # Also create a versioned release tag
+          gh release create "v${VERSION_NAME}" release_assets/* \
+            --title "$RELEASE_TITLE" \
+            --notes "$RELEASE_NOTES" || true
+
+      - name: Save Last Synced Commit & Push Branch
+        if: env.SHOULD_BUILD == 'true'
+        run: |
+          echo "$UPSTREAM_HEAD" > .last_upstream_commit
+          git add -A
+          git diff-index --quiet HEAD || git commit -m "chore: sync with upstream ${UPSTREAM_HEAD:0:7} and update mod build"
+          git push origin master

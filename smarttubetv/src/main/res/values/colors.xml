@@ -4,43 +4,43 @@
     <color name="lb_control_button_color">#86EEEEEE</color>
 
     <!-- Common colors -->
-    <color name="default_background_gradient_start">#000000</color>
-    <color name="default_background_gradient_end">#DDDDDD</color>
-    <color name="fastlane_background">#0096a6</color>
-    <color name="fastlane_background_dark">#004B53</color>
+    <color name="default_background_gradient_start">#0a0b0e</color>
+    <color name="default_background_gradient_end">#14161f</color>
+    <color name="fastlane_background">#E50914</color>
+    <color name="fastlane_background_dark">#12131a</color>
     <color name="default_light_grey">#343434</color>
-    <color name="search_opaque">#0096a6</color>
+    <color name="search_opaque">#E50914</color>
     <color name="search_opaque_yellow">#ffaa3f</color>
 
     <!-- Card view colors -->
-    <color name="card_selected_background_white">#FFFFFF</color>
-    <color name="card_selected_background_white_grey">#D3D3D3</color>
+    <color name="card_selected_background_white">#262938</color>
+    <color name="card_selected_background_white_grey">#262938</color>
     <color name="card_selected_background_yellow">#ffaa3f</color>
-    <color name="card_selected_background_grey">#343434</color>
-    <color name="card_selected_text_black">#000000</color>
-    <color name="card_selected_text_grey">#343434</color>
-    <color name="card_default_background">#0096a6</color>
-    <color name="card_default_background_dark">#004B53</color>
+    <color name="card_selected_background_grey">#262938</color>
+    <color name="card_selected_text_black">#FFFFFF</color>
+    <color name="card_selected_text_grey">#FFFFFF</color>
+    <color name="card_default_background">#151722</color>
+    <color name="card_default_background_dark">#151722</color>
     <color name="card_default_text">#FFFFFF</color>
 
     <!-- Browse fragment colors -->
-    <color name="shelf_background">#282828</color>
-    <color name="shelf_background_dark">#131313</color>
-    <color name="icon_background">#4A4F51</color>
-    <color name="icon_alt_background">#2A2F51</color>
+    <color name="shelf_background">#0f1016</color>
+    <color name="shelf_background_dark">#0a0b0e</color>
+    <color name="icon_background">#2b2e3d</color>
+    <color name="icon_alt_background">#1c1e28</color>
     <color name="player_background">#FF000000</color>
 
     <!-- Dark color scheme -->
-    <color name="scheme_grey_background">#181818</color>
-    <color name="scheme_grey_background_dark">#181818</color>
-    <color name="scheme_grey_shelf_background_dark">#000000</color>
-    <color name="scheme_grey_card_background_dark">#121212</color>
+    <color name="scheme_grey_background">#0f1016</color>
+    <color name="scheme_grey_background_dark">#0a0b0e</color>
+    <color name="scheme_grey_shelf_background_dark">#0a0b0e</color>
+    <color name="scheme_grey_card_background_dark">#151722</color>
 
     <!-- Red color scheme -->
-    <color name="scheme_red_background">#131313</color>
-    <color name="scheme_red_background_dark">@color/dark_red</color>
-    <color name="scheme_red_shelf_background_dark">#131313</color>
-    <color name="scheme_red_card_background_dark">#36474f</color>
+    <color name="scheme_red_background">#0f1016</color>
+    <color name="scheme_red_background_dark">#1c0f12</color>
+    <color name="scheme_red_shelf_background_dark">#0a0b0e</color>
+    <color name="scheme_red_card_background_dark">#1e1417</color>
 
     <!-- Blue color scheme -->
     <color name="scheme_blue_background">#33B5E5</color>
@@ -48,20 +48,20 @@
 
     <!-- Vineyard -->
     <color name="black_87pc">#77000000</color>
-    <color name="primary_dark">#00796B</color>
-    <color name="primary_light">#B2DFDB</color>
-    <color name="primary">#009688</color>
+    <color name="primary_dark">#12131a</color>
+    <color name="primary_light">#262938</color>
+    <color name="primary">#E50914</color>
     <color name="white_87pc">#DDFFFFFF</color>
 
     <!-- Tooltip mod: extracted private values -->
-    <color name="tooltip_background_dark_mod">#e6616161</color>
+    <color name="tooltip_background_dark_mod">#e61f222e</color>
     <color name="tooltip_background_light_mod">#e6FFFFFF</color>
     <color name="foreground_material_dark_mod">@android:color/white</color>
     <color name="foreground_material_light_mod">@android:color/black</color>
 
     <!-- Default Orb buttons colors: search, accounts, search settings etc -->
-    <color name="orb_color">@color/grey</color>
-    <color name="orb_bright_color">@color/grey</color>
+    <color name="orb_color">#262938</color>
+    <color name="orb_bright_color">#E50914</color>
     <color name="orb_icon_color">@color/white</color>
 
     <!-- Search page mic button color -->

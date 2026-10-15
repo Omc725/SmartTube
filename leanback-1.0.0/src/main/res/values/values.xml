@@ -619,7 +619,7 @@
     </declare-styleable>
     <dimen name="lb_action_1_line_height">36dp</dimen>
     <dimen name="lb_action_2_lines_height">56dp</dimen>
-    <dimen name="lb_action_button_corner_radius">2dp</dimen>
+    <dimen name="lb_action_button_corner_radius">10dp</dimen>
     <dimen name="lb_action_icon_margin">12dp</dimen>
     <dimen name="lb_action_padding_horizontal">24dp</dimen>
     <dimen name="lb_action_text_size">16sp</dimen>
@@ -826,7 +826,7 @@
     <dimen name="lb_playback_transport_thumbs_width">154dp</dimen>
     <dimen name="lb_playback_transport_time_margin">8dp</dimen>
     <dimen name="lb_playback_transport_time_margin_top">8dp</dimen>
-    <dimen name="lb_rounded_rect_corner_radius">2dp</dimen>
+    <dimen name="lb_rounded_rect_corner_radius">12dp</dimen>
     <dimen name="lb_search_bar_edit_text_margin_start">24dp</dimen>
     <dimen name="lb_search_bar_height">60dp</dimen>
     <dimen name="lb_search_bar_hint_margin_start">52dp</dimen>
