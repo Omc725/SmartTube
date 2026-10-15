@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/account_picker_bg"
+    android:paddingStart="48dp"
+    android:paddingEnd="48dp"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <!-- Top Brand / Logo & Header Section -->
+    <LinearLayout
+        android:id="@+id/header_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="56dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/app_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:src="@mipmap/app_logo"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/app_name"
+            android:layout_marginBottom="18dp" />
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/account_picker_title"
+            android:textColor="#F1F1F1"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium" />
+
+        <TextView
+            android:id="@+id/subtitle_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/account_picker_subtitle"
+            android:textColor="#8E8E93"
+            android:textSize="15sp"
+            android:fontFamily="sans-serif" />
+    </LinearLayout>
+
+    <!-- Center Horizontal Profiles Row -->
+    <HorizontalScrollView
+        android:id="@+id/profiles_scroll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/header_container"
+        android:scrollbars="none"
+        android:overScrollMode="never"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp">
+
+        <LinearLayout
+            android:id="@+id/profiles_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:clipChildren="false"
+            android:clipToPadding="false" />
+    </HorizontalScrollView>
+
+</RelativeLayout>

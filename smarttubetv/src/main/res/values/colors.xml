@@ -11,6 +11,7 @@
     <color name="default_light_grey">#343434</color>
     <color name="search_opaque">#E50914</color>
     <color name="search_opaque_yellow">#ffaa3f</color>
+    <color name="account_picker_bg">#0A0B0E</color>
 
     <!-- Card view colors -->
     <color name="card_selected_background_white">#262938</color>

@@ -58,13 +58,11 @@ public class AccountSelectionPresenter extends BasePresenter<Void> {
             return;
         }
 
-        GlideIconFetcher.fetchDrawables(getContext(),
-                Helpers.map(mSignInService.getAccounts(), Account::getAvatarImageUrl),
-                icons -> createAndShowDialog(mSignInService.getAccounts(), icons, force));
+        getViewManager().startView(com.liskovsoft.smartyoutubetv2.common.app.views.AccountPickerView.class);
     }
 
     public void nextAccountOrDialog() {
-        MediaServiceManager.instance().loadAccounts(this::nextAccountOrDialog);
+        show(true);
     }
 
     public void unhold() {

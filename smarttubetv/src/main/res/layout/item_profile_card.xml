@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="160dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:clickable="true"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:padding="8dp">
+
+    <!-- Avatar with glowing / highlighted border ring -->
+    <FrameLayout
+        android:id="@+id/avatar_ring"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/bg_profile_avatar_ring"
+        android:padding="4dp">
+
+        <ImageView
+            android:id="@+id/avatar_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:contentDescription="@null" />
+    </FrameLayout>
+
+    <!-- Profile Name -->
+    <TextView
+        android:id="@+id/profile_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textColor="#B0B3C0"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-medium" />
+
+    <!-- Subtitle (e.g. email or badge) -->
+    <TextView
+        android:id="@+id/profile_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textColor="#666A7D"
+        android:textSize="12sp"
+        android:fontFamily="sans-serif"
+        android:visibility="gone" />
+
+</LinearLayout>

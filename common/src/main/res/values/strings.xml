@@ -756,4 +756,10 @@
         <item quantity="one">%s second</item>
         <item quantity="other">%s seconds</item>
     </plurals>
+    <string name="account_picker_title">Who\'s watching?</string>
+    <string name="account_picker_subtitle">Select a profile to continue</string>
+    <string name="account_picker_guest">Guest</string>
+    <string name="account_picker_guest_desc">Signed out</string>
+    <string name="account_picker_add">Add Account</string>
+    <string name="account_picker_add_desc">Sign in with new account</string>
 </resources>

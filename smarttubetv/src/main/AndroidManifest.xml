@@ -152,6 +152,13 @@
             android:theme="@style/App.Theme.Leanback.Preferences.Opaque"/>
 
         <activity
+            android:name="com.liskovsoft.smartyoutubetv2.tv.ui.accountpicker.AccountPickerActivity"
+            android:launchMode="singleInstance"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|layoutDirection"
+            android:screenOrientation="unspecified"
+            android:theme="@style/App.Theme.AccountPicker"/>
+
+        <activity
             android:name="com.liskovsoft.smartyoutubetv2.tv.ui.browse.BrowseActivity"
             android:launchMode="singleInstance"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|layoutDirection"

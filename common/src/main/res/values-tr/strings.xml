@@ -754,4 +754,10 @@
         <item quantity="one">%s saniye</item>
         <item quantity="other">%s saniye</item>
     </plurals>
+    <string name="account_picker_title">Kim izliyor?</string>
+    <string name="account_picker_subtitle">Devam etmek için bir profil seçin</string>
+    <string name="account_picker_guest">Misafir</string>
+    <string name="account_picker_guest_desc">Oturum açılmadı</string>
+    <string name="account_picker_add">Hesap Ekle</string>
+    <string name="account_picker_add_desc">Yeni hesapla oturum aç</string>
 </resources>

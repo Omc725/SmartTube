@@ -79,6 +79,14 @@
         <!-- Overlay bottom bar (can't hide it from styles) -->
         <item tools:targetApi="19" name="android:windowTranslucentNavigation">true</item>
     </style>
+    <style name="App.Theme.AccountPicker" parent="Theme.Leanback">
+        <item name="android:windowBackground">@color/account_picker_bg</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item tools:targetApi="19" name="android:windowTranslucentNavigation">true</item>
+        <item tools:targetApi="18" name="android:windowOverscan">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
     <!-- AppDialogFragment style -->
     <style name="App.Theme.Leanback.Preferences.Base" parent="Theme.Leanback">
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Leanback</item>

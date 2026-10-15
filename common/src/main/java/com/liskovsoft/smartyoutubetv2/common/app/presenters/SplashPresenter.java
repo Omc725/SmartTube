@@ -123,7 +123,9 @@ public class SplashPresenter extends BasePresenter<SplashView> {
     }
 
     private void showAccountSelectionIfNeeded() {
-        AccountSelectionPresenter.instance(getContext()).show();
+        if (getViewManager().getTopView() != com.liskovsoft.smartyoutubetv2.common.app.views.AccountPickerView.class) {
+            AccountSelectionPresenter.instance(getContext()).show();
+        }
     }
 
     private void checkAccountPassword() {
@@ -302,7 +304,11 @@ public class SplashPresenter extends BasePresenter<SplashView> {
         // Should come last
         mIntentChain.add(intent -> {
             ViewManager viewManager = getViewManager();
-            viewManager.startDefaultView();
+            if (AccountsData.instance(getContext()).isSelectAccountOnBootEnabled() && !IntentExtractor.hasData(intent)) {
+                viewManager.startView(com.liskovsoft.smartyoutubetv2.common.app.views.AccountPickerView.class);
+            } else {
+                viewManager.startDefaultView();
+            }
 
             // For debug purpose when using ATV bridge.
             if (IntentExtractor.hasData(intent) && !IntentExtractor.isATVChannelUrl(intent) && !IntentExtractor.isRootUrl(intent)) {
