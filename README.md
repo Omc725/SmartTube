@@ -1,5 +1,23 @@
-[<img src="images/badge_fdroid.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/app.smarttube.fdroid/)
-[<img src="images/badge_github.png" alt="Get it on GitHub" height="80">](https://github.com/yuliskov/SmartTube/releases)
+[<img src="images/badge_github.png" alt="Get it on GitHub" height="80">](https://github.com/Omc725/SmartTube/releases/tag/latest)
+
+# 📺 SmartTube Modern UI Mod (by Omc725)
+
+Bu depo, [yuliskov/SmartTube](https://github.com/yuliskov/SmartTube) projesinin modernize edilmiş, arayüz makyajlı ve otomatik senkronize edilen özel sürümüdür.
+
+### ✨ Mod Özellikleri
+- 🎨 **Modern Karanlık / OLED Arayüz Makyajı**: Göz yormayan koyu grafit/OLED kartlar, modern YouTube kırmızısı vurgular ve 12dp yuvarlatılmış kart köşeleri.
+- 👤 **Açılışta Profil/Hesap Seçim Ekranı**: TV'yi her açtığınızda oturum açmış profilleriniz, Misafir (hesapsız) modu veya hızlı hesap ekleme seçenekleri ekrana gelir.
+- 🔄 **Otomatik Güncelleme Senkronizasyonu**: Upstream (yuliskov/SmartTube) her yeni sürüm veya güncelleme aldığında, bu repo otomatik olarak güncellemeyi çeker, makyajı uygular, imzalı APK'ları üretir ve yayınlar.
+- 🚀 **Özel Güncelleme Kanalı**: Uygulama içi güncelleme kontrolü doğrudan `https://github.com/Omc725/SmartTube/releases` üzerindeki `smarttube_beta2.json` manifestine bağlıdır. TV'nizden tek tıkla güncellenir.
+- ⚡ **Sıfır Performans Kaybı**: Tüm görsel iyileştirmeler donanım hızlandırmalı Android Leanback bileşenleri üzerinden yapılmıştır; en düşük donanımlı Android TV Box veya çubuklarda dahi takılma yapmaz.
+
+### 📥 İndirme Bağlantıları (En Son Sürüm)
+- **ARM64 (Android TV 9+ / Pixel Tablet vb.):** [smarttube_beta_arm64-v8a.apk](https://github.com/Omc725/SmartTube/releases/download/latest/smarttube_beta_arm64-v8a.apk)
+- **ARMv7 (Çoğu Android TV & TV Box - Mi Box, Fire TV vb.):** [smarttube_beta_armeabi-v7a.apk](https://github.com/Omc725/SmartTube/releases/download/latest/smarttube_beta_armeabi-v7a.apk)
+- **Universal (Tüm Mimariler):** [smarttube_beta_universal.apk](https://github.com/Omc725/SmartTube/releases/download/latest/smarttube_beta_universal.apk)
+- **Tüm Dosyalar ve Güncelleme Manifesti:** [Releases Sayfası](https://github.com/Omc725/SmartTube/releases/tag/latest)
+
+---
 
 # Important announcement about the app
 
