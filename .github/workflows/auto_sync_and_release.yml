@@ -162,16 +162,14 @@ jobs:
           gh release create latest release_assets/* \
             --repo "${{ github.repository }}" \
             --title "$RELEASE_TITLE" \
-            --notes "$RELEASE_NOTES" \
-            --clobber
+            --notes "$RELEASE_NOTES"
 
           # Also create a versioned release tag
           gh release delete "v${VERSION_NAME}" --repo "${{ github.repository }}" --yes 2>/dev/null || true
           gh release create "v${VERSION_NAME}" release_assets/* \
             --repo "${{ github.repository }}" \
             --title "$RELEASE_TITLE" \
-            --notes "$RELEASE_NOTES" \
-            --clobber || true
+            --notes "$RELEASE_NOTES" || true
 
       - name: Save Last Synced Commit & Push Branch
         if: env.SHOULD_BUILD == 'true'
